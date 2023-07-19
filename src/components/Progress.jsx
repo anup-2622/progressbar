@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./progress.css";
+import { Circle } from "rc-progress";
 
 const Progress = ({ duration }) => {
   const [time, setTime] = useState(duration);
-  const calculateProgress = () => {
-    return (time / duration) * 100;
-  };
+  const [calculateProgress, setCalculateprogress] = useState(
+    (time / duration) * 100
+  );
 
   useEffect(() => {
     if (time > 0) {
@@ -17,7 +18,10 @@ const Progress = ({ duration }) => {
   }, [time]);
 
   const handleAddTime = () => {
-    setTime((prevTime) => prevTime + 10);
+    if (time <= 50) {
+      setTime((prevTime) => prevTime + 10);
+      //   setCalculateprogress(time + 10);
+    }
   };
 
   const handleSkipTime = () => {
@@ -34,25 +38,21 @@ const Progress = ({ duration }) => {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center text-center">
-        <svg className="circle-countdown-svg" viewBox="0 0 100 100">
-          <circle className="circle-countdown-path" cx="50" cy="50" r="45" />
-          <circle
-            className="circle-countdown-fill"
-            cx="50"
-            cy="50"
-            r="45"
-            style={{
-              strokeDashoffset: `${calculateProgress()}px`,
-              animationDuration: `${duration}s`,
-            }}
+      <div className="flex flex-col mt-24 justify-center items-center text-center">
+        <h2 className=""> 00:{time}</h2>
+        <div className=" h-32 w-32  absolute overflow-visible">
+          <Circle
+            percent={(time / 60) * 100}
+            // gapDegree={}
+            strokeWidth={4}
+            trailWidth={2}
+            strokeColor="red"
+            value={time}
           />
-        </svg>
-        <h2>Countdown Timer:</h2>
-        <h2> 00:{time} seconds</h2>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 p-2">
+      <div className="grid grid-cols-2 p-2 mt-32">
         <button
           className="p-2 m-2 bg-blue-500 text-white font-semibold "
           onClick={handleAddTime}
