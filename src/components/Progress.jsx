@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./progress.css";
+
 import { Circle } from "rc-progress";
 
 const Progress = ({ duration }) => {
   const [time, setTime] = useState(duration);
-  const [calculateProgress, setCalculateprogress] = useState(
-    (time / duration) * 100
-  );
 
   useEffect(() => {
     if (time > 0) {
@@ -20,7 +17,6 @@ const Progress = ({ duration }) => {
   const handleAddTime = () => {
     if (time <= 50) {
       setTime((prevTime) => prevTime + 10);
-      //   setCalculateprogress(time + 10);
     }
   };
 
@@ -43,7 +39,6 @@ const Progress = ({ duration }) => {
         <div className=" h-32 w-32  absolute overflow-visible">
           <Circle
             percent={(time / 60) * 100}
-            // gapDegree={}
             strokeWidth={4}
             trailWidth={2}
             strokeColor="red"
